@@ -2,7 +2,7 @@ group 'com.github.florent37.assets_audio_player'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.7.21' // Kotlin version
+    ext.kotlin_version = '1.8.0' // Kotlin version
     repositories {
         google()
         mavenCentral()
@@ -52,13 +52,13 @@ android {
 
     compileOptions {
         // Set Java compatibility to Java 11
-        sourceCompatibility JavaVersion.VERSION_11
-        targetCompatibility JavaVersion.VERSION_11
+        sourceCompatibility JavaVersion.VERSION_17
+        targetCompatibility JavaVersion.VERSION_17
     }
 
     kotlinOptions {
         // Ensure Kotlin targets Java 11
-        jvmTarget = '11'
+        jvmTarget = '17'
     }
 }
 
