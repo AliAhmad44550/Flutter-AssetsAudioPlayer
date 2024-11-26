@@ -2,7 +2,7 @@ group 'com.github.florent37.assets_audio_player'
 version '1.0-SNAPSHOT'
 
 buildscript {
-    ext.kotlin_version = '1.7.21'
+    ext.kotlin_version = '1.7.21' // Kotlin version
     repositories {
         google()
         mavenCentral()
@@ -21,12 +21,14 @@ rootProject.allprojects {
     }
 }
 
+// Apply necessary plugins
 apply plugin: 'com.android.library'
 apply plugin: 'kotlin-android'
 
 android {
     compileSdk 34
 
+    // Namespace support for Android Gradle Plugin 7.0+
     if (project.android.hasProperty("namespace")) {
         namespace 'com.github.florent37.assets_audio_player'
     }
@@ -34,38 +36,56 @@ android {
     sourceSets {
         main.java.srcDirs += 'src/main/kotlin'
     }
+
     defaultConfig {
         multiDexEnabled true
         testInstrumentationRunner "androidx.test.runner.AndroidJUnitRunner"
     }
+
     lintOptions {
         disable 'InvalidPackage'
     }
+
     packagingOptions {
         exclude "DebugProbesKt.bin"
     }
+
     compileOptions {
-        sourceCompatibility JavaVersion.VERSION_1_8
-        targetCompatibility JavaVersion.VERSION_1_8
+        // Set Java compatibility to Java 11
+        sourceCompatibility JavaVersion.VERSION_11
+        targetCompatibility JavaVersion.VERSION_11
+    }
+
+    kotlinOptions {
+        // Ensure Kotlin targets Java 11
+        jvmTarget = '11'
     }
 }
 
 dependencies {
-
     def coroutinesVersion = '1.6.4'
-
-    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
-    implementation "androidx.multidex:multidex:2.0.1"
-    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
-    implementation 'androidx.annotation:annotation:1.5.0'
-
     def exoPlayerVersion = '2.18.1'
 
+    // Kotlin Standard Library
+    implementation "org.jetbrains.kotlin:kotlin-stdlib:$kotlin_version"
+
+    // AndroidX and MultiDex support
+    implementation "androidx.multidex:multidex:2.0.1"
+    implementation "androidx.annotation:annotation:1.5.0"
+
+    // Kotlin Coroutines
+    implementation "org.jetbrains.kotlinx:kotlinx-coroutines-android:$coroutinesVersion"
+
+    // ExoPlayer dependencies for media playback
     implementation "com.google.android.exoplayer:exoplayer:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-hls:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-dash:$exoPlayerVersion"
     implementation "com.google.android.exoplayer:exoplayer-smoothstreaming:$exoPlayerVersion"
+
+    // Glide for image loading
     implementation 'com.github.bumptech.glide:glide:4.14.2'
     annotationProcessor 'com.github.bumptech.glide:compiler:4.14.2'
+
+    // Media compatibility library
     implementation 'androidx.media:media:1.6.0'
 }
